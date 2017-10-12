@@ -38,6 +38,8 @@ async def update_pairs(exchange_name, pairs):
     async with pool.acquire() as conn:
         await conn.executemany(
             '''INSERT INTO pair (exchange_name, base, quote)
-               VALUES ($1, $2, $3)''',
+               VALUES ($1, $2, $3)
+               ON CONFLICT DO NOTHING 
+               ''',
             ((exchange_name, p.base.upper(), p.quote.upper()) for p in pairs)
         )
