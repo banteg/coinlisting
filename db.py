@@ -31,15 +31,14 @@ async def get_pairs(exchange_name):
                WHERE exchange_name = $1''',
             exchange_name
         )
-        return {Pair(row['base'].upper(), row['quote'].upper()) for row in rows}
+        return {Pair(row['base'], row['quote']) for row in rows}
 
 
 async def update_pairs(exchange_name, pairs):
     async with pool.acquire() as conn:
         await conn.executemany(
             '''INSERT INTO pair (exchange_name, base, quote)
-               VALUES ($1, $2, $3)
-               ON CONFLICT DO NOTHING 
+               VALUES ($1, $2, $3) 
                ''',
-            ((exchange_name, p.base.upper(), p.quote.upper()) for p in pairs)
+            ((exchange_name, p.base, p.quote) for p in pairs)
         )
