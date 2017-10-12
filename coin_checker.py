@@ -36,7 +36,7 @@ class CoinChecker:
                 for pair in new_pairs:
                     await self.send_message(self.compose_message(api, pair))
                     getLogger().info(f'Notification about pair {pair} has been sent to channel.')
-                    continue
+                continue
             getLogger().info(f'There is no new pairs on exchange {api.name!r}.')
 
     async def periodic(self, interval=None):
