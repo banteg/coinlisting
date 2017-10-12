@@ -1,0 +1,12 @@
+import os
+
+BOT_TOKEN = os.environ['COINLISTING_BOT_TOKEN']
+BOT_NAME = 'NewCoinsNotifyBot'
+
+DATABASE_URL = os.environ['DATABASE_URL']
+
+CHECK_INTERVAL = int(os.environ['COINLISTING_BOT_CHECK_INTERVAL'])  # seconds
+
+CHANNEL_ID = os.environ['COINLISTING_BOT_CHANNEL_ID']
+
+REQUEST_ATTEMPTS_LIMIT = 5 or int(os.environ['COINLISTING_BOT_ATTEMPTS_LIMIT'])
