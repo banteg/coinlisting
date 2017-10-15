@@ -7,6 +7,7 @@ import db
 import settings
 from exchange import exchanges
 from exchange.base import Pair, BaseApi
+from exchange.exceptions import BaseExchangeException
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(settings.BOT_NAME)
@@ -19,7 +20,11 @@ class CoinChecker:
     async def check(self):
         for api_cls in exchanges:
             api = api_cls()
-            api_pairs = await api.tradable_pairs()
+            try:
+                api_pairs = await api.tradable_pairs()
+            except BaseExchangeException as e:
+                getLogger().exception(e)
+                continue
             db_pairs = await db.get_pairs(api.name)
             if not db_pairs:
                 # initial launch, don't send message to channel, only put pairs to db

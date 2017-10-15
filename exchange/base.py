@@ -6,7 +6,7 @@ from logging import getLogger
 import aiohttp
 from aiohttp import ClientSession
 
-from exchange.exchanges import WrongContentTypeException, InvalidResponseException, BaseExchangeException
+from exchange.exceptions import WrongContentTypeException, InvalidResponseException, BaseExchangeException
 from settings import REQUEST_ATTEMPTS_LIMIT
 
 Pair = namedtuple('Pair', ['base', 'quote'])

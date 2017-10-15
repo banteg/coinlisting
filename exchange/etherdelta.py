@@ -1,5 +1,5 @@
 from exchange.base import BaseApi, Pair
-from exchange.exchanges import BaseExchangeException
+from exchange.exceptions import BaseExchangeException
 
 
 class EtherdeltaApiException(BaseExchangeException):
