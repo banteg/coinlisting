@@ -20,7 +20,7 @@ class EtherdeltaApi(BaseApi):
         )
 
     def _raise_if_error(self, response: dict):
-        if not len(response):
+        if not response:
             raise EtherdeltaApiException('Empty response')
 
     def _substitute(self, currency) -> str:
