@@ -51,7 +51,7 @@ class CoinChecker:
             await self.check()
 
     async def send_message(self, coin_info):
-        await self.channel.send_text(coin_info, parse_mode='Markdown')
+        await self.channel.send_text(coin_info, parse_mode='Markdown', disable_web_page_preview=True)
 
     @staticmethod
     def compose_message(api: BaseApi, pair: Pair) -> str:
