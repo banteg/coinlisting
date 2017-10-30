@@ -34,6 +34,7 @@ $ source venv/bin/activate
 * [Bitstamp](https://www.bitstamp.net/)
 * [Cryptopia](https://www.cryptopia.co.nz/)
 * [Gate](https://gate.io/)
+* [Radar Relay](https://app.radarrelay.com/)
 
 ## Contributing
 

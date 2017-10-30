@@ -7,6 +7,7 @@ from exchange.kraken import KrakenApi
 from exchange.liqui import LiquiApi
 from exchange.poloniex import PoloniexApi
 from exchange.gate import GateApi
+from exchange.radarrelay import RadarRelayApi
 
 exchanges = [
     KrakenApi,
@@ -17,5 +18,6 @@ exchanges = [
     BitfinexApi,
     BitstampApi,
     CryptopiaApi,
-    GateApi
+    GateApi,
+    RadarRelayApi,
 ]
