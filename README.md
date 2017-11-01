@@ -30,6 +30,8 @@ $ source venv/bin/activate
 * [Kraken](https://www.kraken.com/)
 * [Poloniex](https://poloniex.com/)
 * [Binance](https://www.binance.com/)
+* [Bitfinex](https://www.bitfinex.com/)
+* [Bitstamp](https://www.bitstamp.net/)
 
 ## Contributing
 
