@@ -22,7 +22,7 @@ class BinanceApi(BaseApi):
 
     def _raise_if_error(self, response: dict):
         if not response or 'data' not in response:
-            BinanceApiException(response.get('msg', 'Empty response'))
+            raise BinanceApiException(response.get('msg', 'Empty response'))
 
     def _substitute(self, currency) -> str:
         return currency
