@@ -3,5 +3,6 @@ from exchange.bittrex import BittrexApi
 from exchange.kraken import KrakenApi
 from exchange.liqui import LiquiApi
 from exchange.poloniex import PoloniexApi
+from exchange.bitfinex import BitfinexApi
 
-exchanges = [KrakenApi, LiquiApi, BittrexApi, PoloniexApi, BinanceApi]
+exchanges = [KrakenApi, LiquiApi, BittrexApi, PoloniexApi, BinanceApi, BitfinexApi]
