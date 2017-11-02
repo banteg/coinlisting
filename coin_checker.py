@@ -17,31 +17,37 @@ class CoinChecker:
     channel = bot.channel(settings.CHANNEL_ID)
 
     async def check(self):
-        for api_cls in exchanges:
-            api = api_cls()
-            try:
-                api_pairs = await api.tradable_pairs()
-            except Exception as e:
-                getLogger().exception(e)
-                continue
-            db_pairs = await db.get_pairs(api.name)
-            if not db_pairs:
-                # initial launch, don't send message to channel, only put pairs to db
-                await db.update_pairs(api.name, api_pairs)
-                getLogger().info(f'Initial launch, {len(api_pairs)} pairs added on exchange {api.name!r}.')
-                continue
+        await asyncio.gather(
+            *(self.fetch_api(api_cls) for api_cls in exchanges)
+        )
 
-            new_pairs = api_pairs - db_pairs
+    async def fetch_api(self, api_cls):
+        api = api_cls()
+        try:
+            api_pairs = await api.tradable_pairs()
+        except Exception as e:
+            getLogger().exception(e)
+            return
+        db_pairs = await db.get_pairs(api.name)
+        if not db_pairs:
+            # initial launch, don't send message to channel, only put pairs to db
+            await db.update_pairs(api.name, api_pairs)
+            getLogger().info(f'Initial launch, {len(api_pairs)} pairs added on exchange {api.name!r}.')
+            return
 
-            if new_pairs:
-                getLogger().info(f'There is {len(new_pairs)} new pairs on exchange {api.name!r}')
-                await db.update_pairs(api.name, new_pairs)
-                getLogger().info('Pairs added to db.')
-                for pair in new_pairs:
-                    await self.send_message(self.compose_message(api, pair))
-                    getLogger().info(f'Notification about pair {pair} has been sent to channel.')
-                continue
+        new_pairs = api_pairs - db_pairs
+
+        if not new_pairs:
             getLogger().info(f'There is no new pairs on exchange {api.name!r}.')
+            return
+
+        getLogger().info(f'There is {len(new_pairs)} new pairs on exchange {api.name!r}')
+        await db.update_pairs(api.name, new_pairs)
+        getLogger().info('Pairs added to db.')
+        for pair in new_pairs:
+            await self.send_message(self.compose_message(api, pair))
+            getLogger().info(f'Notification about pair {pair} has been sent to channel.')
+
 
     async def periodic(self, interval=None):
         while True:
