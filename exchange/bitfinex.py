@@ -23,8 +23,5 @@ class BitfinexApi(BaseApi):
         if not isinstance(response, list):
             raise BitfinexApiException('bitfinex api changed')
 
-    def _substitute(self, currency) -> str:
-        return currency
-
     def ticker_url(self, pair: Pair) -> str:
         return f'https://www.bitfinex.com/trading/{pair.base}{pair.quote}'

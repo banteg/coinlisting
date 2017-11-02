@@ -15,17 +15,14 @@ class BittrexApi(BaseApi):
         result = response['result']
         return set(
             Pair(
-                self._substitute(i['BaseCurrency']),
-                self._substitute(i['MarketCurrency']),
+                i['BaseCurrency'],
+                i['MarketCurrency'],
             ) for i in result
         )
 
     def _raise_if_error(self, response: dict):
         if not response['success']:
             raise BittrexApiException(response['message'])
-
-    def _substitute(self, currency) -> str:
-        return currency
 
     def ticker_url(self, pair: Pair) -> str:
         return f'https://bittrex.com/Market/Index?MarketName={pair.base}-{pair.quote}'

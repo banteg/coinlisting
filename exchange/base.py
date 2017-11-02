@@ -27,10 +27,6 @@ class BaseApi(ABC):
         '''
 
     @abstractmethod
-    def _substitute(self, currency) -> str:
-        '''Substitutes currency if needed.'''
-
-    @abstractmethod
     def ticker_url(self, pair: Pair) -> str:
         '''Returns exchange ticker url for specified pair.'''
 

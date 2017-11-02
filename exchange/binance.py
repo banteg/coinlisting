@@ -15,17 +15,14 @@ class BinanceApi(BaseApi):
         result = response['data']
         return set(
             Pair(
-                self._substitute(i['baseAsset']),
-                self._substitute(i['quoteAsset']),
+                i['baseAsset'],
+                i['quoteAsset'],
             ) for i in result
         )
 
     def _raise_if_error(self, response: dict):
         if not response or 'data' not in response:
             raise BinanceApiException(response.get('msg', 'Empty response'))
-
-    def _substitute(self, currency) -> str:
-        return currency
 
     def ticker_url(self, pair: Pair) -> str:
         return f'https://www.binance.com/trade.html?symbol={pair.base}_{pair.quote}'

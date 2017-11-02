@@ -23,8 +23,5 @@ class BitstampApi(BaseApi):
         if not isinstance(response, list):
             raise BitstampApiException('bitstamp api changed')
 
-    def _substitute(self, currency) -> str:
-        return currency
-
     def ticker_url(self, pair: Pair) -> str:
         return 'https://www.bitstamp.net/market/tradeview/'
