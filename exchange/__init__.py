@@ -6,6 +6,7 @@ from exchange.cryptopia import CryptopiaApi
 from exchange.kraken import KrakenApi
 from exchange.liqui import LiquiApi
 from exchange.poloniex import PoloniexApi
+from exchange.gate import GateApi
 
 exchanges = [
     KrakenApi,
@@ -15,5 +16,6 @@ exchanges = [
     BinanceApi,
     BitfinexApi,
     BitstampApi,
-    CryptopiaApi
+    CryptopiaApi,
+    GateApi
 ]

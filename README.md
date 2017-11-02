@@ -33,6 +33,7 @@ $ source venv/bin/activate
 * [Bitfinex](https://www.bitfinex.com/)
 * [Bitstamp](https://www.bitstamp.net/)
 * [Cryptopia](https://www.cryptopia.co.nz/)
+* [Gate](https://gate.io/)
 
 ## Contributing
 
