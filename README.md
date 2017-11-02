@@ -32,6 +32,7 @@ $ source venv/bin/activate
 * [Binance](https://www.binance.com/)
 * [Bitfinex](https://www.bitfinex.com/)
 * [Bitstamp](https://www.bitstamp.net/)
+* [Cryptopia](https://www.cryptopia.co.nz/)
 
 ## Contributing
 
