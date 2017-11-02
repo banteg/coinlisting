@@ -9,7 +9,10 @@ from aiohttp import ClientSession
 from exchange.exceptions import WrongContentTypeException, InvalidResponseException, BaseExchangeException
 from settings import REQUEST_ATTEMPTS_LIMIT
 
-Pair = namedtuple('Pair', ['base', 'quote'])
+
+class Pair(namedtuple('Node', ['base', 'quote'])):
+    def __new__(cls, base, quote):
+        return super(Pair, cls).__new__(cls, base.upper(), quote.upper())
 
 
 class BaseApi(ABC):
