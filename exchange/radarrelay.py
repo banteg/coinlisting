@@ -26,8 +26,5 @@ class RadarRelayApi(BaseApi):
         if not isinstance(response, list):
             RadarRelayApiException('radar relay api changed')
 
-    def _substitute(self, currency) -> str:
-        return currency
-
     def ticker_url(self, pair: Pair) -> str:
         return f'https://app.radarrelay.com/#{pair.base}-{pair.quote}'
