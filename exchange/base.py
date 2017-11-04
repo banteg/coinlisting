@@ -10,7 +10,7 @@ from exchange.exceptions import WrongContentTypeException, InvalidResponseExcept
 from settings import REQUEST_ATTEMPTS_LIMIT
 
 
-class Pair(namedtuple('Node', ['base', 'quote'])):
+class Pair(namedtuple('Pair', ['base', 'quote'])):
     def __new__(cls, base, quote):
         return super(Pair, cls).__new__(cls, base.upper(), quote.upper())
 
