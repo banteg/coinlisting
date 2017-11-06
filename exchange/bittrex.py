@@ -7,8 +7,13 @@ class BittrexApiException(BaseExchangeException):
 
 
 class BittrexApi(BaseApi):
-    name = 'bittrex'
-    url = 'https://bittrex.com/'
+    @property
+    def name(self):
+        return 'bittrex'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Bittrex', 'https://bittrex.com/')
 
     async def tradable_pairs(self) -> set:
         response = await self.get('https://bittrex.com/api/v1.1/public/getmarkets')

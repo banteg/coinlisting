@@ -7,8 +7,13 @@ class GateApiException(BaseExchangeException):
 
 
 class GateApi(BaseApi):
-    name = 'gate'
-    url = 'https://gate.io/'
+    @property
+    def name(self):
+        return 'gate'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Gate', 'https://gate.io/')
 
     async def tradable_pairs(self) -> set:
         result = await self.get('http://data.gate.io/api2/1/pairs')

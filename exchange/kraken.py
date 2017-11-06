@@ -7,8 +7,13 @@ class KrakenApiException(BaseExchangeException):
 
 
 class KrakenApi(BaseApi):
-    name = 'kraken'
-    url = 'https://www.kraken.com/'
+    @property
+    def name(self):
+        return 'kraken'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Kraken', 'https://www.kraken.com/')
 
     async def tradable_pairs(self) -> set:
         response = await self.get('https://api.kraken.com/0/public/AssetPairs')

@@ -7,8 +7,13 @@ class BitstampApiException(BaseExchangeException):
 
 
 class BitstampApi(BaseApi):
-    name = 'bitstamp'
-    url = 'https://www.bitstamp.net/'
+    @property
+    def name(self):
+        return 'bitstamp'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Bitstamp', 'https://www.bitstamp.net/')
 
     async def tradable_pairs(self) -> set:
         result = await self.get('https://www.bitstamp.net/api/v2/trading-pairs-info/')

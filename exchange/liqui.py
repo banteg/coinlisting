@@ -7,8 +7,13 @@ class LiquiApiException(BaseExchangeException):
 
 
 class LiquiApi(BaseApi):
-    name = 'liqui'
-    url = 'https://liqui.io/'
+    @property
+    def name(self):
+        return 'liqui'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Liqui', 'https://liqui.io/')
 
     async def tradable_pairs(self) -> set:
         response = await self.get('https://api.liqui.io/api/3/info')

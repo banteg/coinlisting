@@ -7,8 +7,13 @@ class RadarRelayApiException(BaseExchangeException):
 
 
 class RadarRelayApi(BaseApi):
-    name = 'radar_relay'
-    url = 'https://app.radarrelay.com'
+    @property
+    def name(self):
+        return 'radar_relay'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Radar relay', 'https://app.radarrelay.com')
 
     async def tradable_pairs(self) -> set:
         response = await self.get(

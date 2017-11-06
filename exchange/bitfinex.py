@@ -7,8 +7,13 @@ class BitfinexApiException(BaseExchangeException):
 
 
 class BitfinexApi(BaseApi):
-    name = 'bitfinex'
-    url = 'https://www.bitfinex.com/'
+    @property
+    def name(self):
+        return 'bitfinex'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Bitfinex', 'https://www.bitfinex.com/')
 
     async def tradable_pairs(self) -> set:
         result = await self.get('https://api.bitfinex.com/v1/symbols')

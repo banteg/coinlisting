@@ -48,7 +48,6 @@ class CoinChecker:
             await self.send_message(self.compose_message(api, pair))
             getLogger().info(f'Notification about pair {pair} has been sent to channel.')
 
-
     async def periodic(self, interval=None):
         while True:
             getLogger().info('sleeping')
@@ -60,8 +59,8 @@ class CoinChecker:
 
     @staticmethod
     def compose_message(api: BaseApi, pair: Pair) -> str:
-        pair_name = f'{pair.base}/{pair.quote}'
-        return f'[{pair_name}]({api.ticker_url(pair)}) listed on [{api.name.title()}]({api.url})'
+        ticker_url = api.markdown_url(f'{pair.base}/{pair.quote}', api.ticker_url(pair))
+        return f'{ticker_url} listed on {api.md_link}'
 
 
 if __name__ == '__main__':

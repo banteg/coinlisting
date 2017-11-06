@@ -16,8 +16,10 @@ class Pair(namedtuple('Pair', ['base', 'quote'])):
 
 
 class BaseApi(ABC):
-    name = None
-    url = None
+    @property
+    @abstractmethod
+    def name(self):
+        '''Return exchange's name.'''
 
     @abstractmethod
     async def tradable_pairs(self) -> set:
@@ -32,6 +34,15 @@ class BaseApi(ABC):
     @abstractmethod
     def ticker_url(self, pair: Pair) -> str:
         '''Returns exchange ticker url for specified pair.'''
+
+    @property
+    @abstractmethod
+    def md_link(self):
+        '''Return markdown link to exchange.'''
+
+    @staticmethod
+    def markdown_url(title, url):
+        return f'[{title}]({url})'
 
     async def request(self, url, headers, method='get', data=None):
         attempt, delay = 1, 1

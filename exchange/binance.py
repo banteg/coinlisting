@@ -7,8 +7,13 @@ class BinanceApiException(BaseExchangeException):
 
 
 class BinanceApi(BaseApi):
-    name = 'binance'
-    url = 'https://www.binance.com/'
+    @property
+    def name(self):
+        return 'binance'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Binance', 'https://www.binance.com/')
 
     async def tradable_pairs(self) -> set:
         response = await self.get('https://www.binance.com/exchange/public/product')

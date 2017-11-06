@@ -7,8 +7,13 @@ class PoloniexApiException(BaseExchangeException):
 
 
 class PoloniexApi(BaseApi):
-    name = 'poloniex'
-    url = 'https://poloniex.com/'
+    @property
+    def name(self):
+        return 'poloniex'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Poloniex', 'https://poloniex.com/')
 
     async def tradable_pairs(self) -> set:
         result = await self.get('https://poloniex.com/public?command=returnTicker')

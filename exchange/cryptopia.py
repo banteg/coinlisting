@@ -7,8 +7,13 @@ class CryptopiaApiException(BaseExchangeException):
 
 
 class CryptopiaApi(BaseApi):
-    name = 'cryptopia'
-    url = 'https://www.cryptopia.co.nz/'
+    @property
+    def name(self):
+        return 'cryptopia'
+
+    @property
+    def md_link(self):
+        return self.markdown_url('Cryptopia', 'https://www.cryptopia.co.nz/')
 
     async def tradable_pairs(self) -> set:
         response = await self.get('https://www.cryptopia.co.nz/api/GetTradePairs')
