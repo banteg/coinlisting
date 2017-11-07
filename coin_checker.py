@@ -43,10 +43,10 @@ class CoinChecker:
 
         getLogger().info(f'There is {len(new_pairs)} new pairs on exchange {api.name!r}')
         await db.update_pairs(api.name, new_pairs)
-        getLogger().info('Pairs added to db.')
+        getLogger().info(f'{len(new_pairs)} pairs added to database on exchange {api.name!r}.')
         for pair in new_pairs:
             await self.send_message(self.compose_message(api, pair))
-            getLogger().info(f'Notification about pair {pair} has been sent to channel.')
+            getLogger().info(f'Notification about pair {pair} on exchange {api.name!r} has been sent to channel.')
 
     async def periodic(self, interval=None):
         while True:
