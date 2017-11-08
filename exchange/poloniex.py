@@ -23,8 +23,8 @@ class PoloniexApi(BaseApi):
         result = await self.get('https://poloniex.com/public?command=returnTicker')
         return set(
             Pair(
+                pair.split('_')[1],  # reversed order
                 pair.split('_')[0],
-                pair.split('_')[1],
             ) for pair in result
         )
 
@@ -33,7 +33,7 @@ class PoloniexApi(BaseApi):
             raise PoloniexApiException(response.get('error', 'Empty response'))
 
     def ticker_url(self, pair: Pair) -> str:
-        return f'https://poloniex.com/exchange#{pair.base}_{pair.quote}'
+        return f'https://poloniex.com/exchange#{pair.quote}_{pair.base}'  # reversed order
 
     async def coin_name(self, symbol: str) -> str:
         currencies = await self.get('https://poloniex.com/public?command=returnCurrencies')
