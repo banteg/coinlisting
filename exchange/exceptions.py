@@ -1,4 +1,4 @@
-class BaseExchangeException(BaseException):
+class BaseExchangeException(Exception):
     pass
 
 
