@@ -3,10 +3,10 @@ from exchange.bitfinex import BitfinexApi
 from exchange.bitstamp import BitstampApi
 from exchange.bittrex import BittrexApi
 from exchange.cryptopia import CryptopiaApi
+from exchange.gate import GateApi
 from exchange.kraken import KrakenApi
 from exchange.liqui import LiquiApi
 from exchange.poloniex import PoloniexApi
-from exchange.gate import GateApi
 from exchange.radarrelay import RadarRelayApi
 
 exchanges = [

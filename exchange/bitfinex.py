@@ -30,3 +30,6 @@ class BitfinexApi(BaseApi):
 
     def ticker_url(self, pair: Pair) -> str:
         return f'https://www.bitfinex.com/trading/{pair.base}{pair.quote}'
+
+    async def coin_name(self, symbol: str) -> str:
+        return ''

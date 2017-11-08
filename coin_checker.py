@@ -7,6 +7,7 @@ import db
 import settings
 from exchange import exchanges
 from exchange.base import Pair, BaseApi
+from exchange.exceptions import BaseExchangeException
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(settings.BOT_NAME)
@@ -45,7 +46,12 @@ class CoinChecker:
         await db.update_pairs(api.name, new_pairs)
         getLogger().info(f'{len(new_pairs)} pairs added to database on exchange {api.name!r}.')
         for pair in new_pairs:
-            await self.send_message(self.compose_message(api, pair))
+            try:
+                coin_name = await api.coin_name(pair.base)
+            except BaseExchangeException as e:
+                getLogger().exception(e)
+                coin_name = ''
+            await self.send_message(self.compose_message(api, pair, coin_name))
             getLogger().info(f'Notification about pair {pair} on exchange {api.name!r} has been sent to channel.')
 
     async def periodic(self, interval=None):
@@ -58,8 +64,10 @@ class CoinChecker:
         await self.channel.send_text(coin_info, parse_mode='Markdown', disable_web_page_preview=True)
 
     @staticmethod
-    def compose_message(api: BaseApi, pair: Pair) -> str:
+    def compose_message(api: BaseApi, pair: Pair, coin_name: str) -> str:
         ticker_url = api.markdown_url(f'{pair.base}/{pair.quote}', api.ticker_url(pair))
+        if coin_name:
+            ticker_url = f'{ticker_url} ({coin_name})'
         return f'{ticker_url} listed on {api.md_link}'
 
 

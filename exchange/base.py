@@ -35,6 +35,10 @@ class BaseApi(ABC):
     def ticker_url(self, pair: Pair) -> str:
         '''Returns exchange ticker url for specified pair.'''
 
+    @abstractmethod
+    async def coin_name(self, symbol: str) -> str:
+        '''Returns base coin name for coin symbol (i.e. 'Litecoin' for 'LTC' if possible else empty string.'''
+
     @property
     @abstractmethod
     def md_link(self):

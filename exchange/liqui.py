@@ -31,3 +31,6 @@ class LiquiApi(BaseApi):
 
     def ticker_url(self, pair: Pair) -> str:
         return f'https://liqui.io/#/exchange/{pair.base}_{pair.quote}'
+
+    async def coin_name(self, symbol: str) -> str:
+        return ''

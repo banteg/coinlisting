@@ -6,6 +6,10 @@ class RadarRelayApiException(BaseExchangeException):
     pass
 
 
+class RadarRelayPairNamesException(RadarRelayApiException):
+    pass
+
+
 class RadarRelayApi(BaseApi):
     @property
     def name(self):
@@ -33,3 +37,15 @@ class RadarRelayApi(BaseApi):
 
     def ticker_url(self, pair: Pair) -> str:
         return f'https://app.radarrelay.com/#{pair.base}-{pair.quote}'
+
+    async def coin_name(self, symbol: str) -> str:
+        currencies = await self.get(
+            'https://api.radarrelay.com/v1/info/tokens',
+            headers={'Origin': 'https://app.radarrelay.com'}
+        )
+        if not isinstance(currencies, list):
+            raise RadarRelayPairNamesException('radar relay api changed')
+        coin_name = next((i['name'] for i in currencies if i['symbol'] == symbol), None)
+        if not coin_name:
+            raise RadarRelayPairNamesException(f'cannot find coin {symbol!r}')
+        return coin_name

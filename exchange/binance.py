@@ -31,3 +31,6 @@ class BinanceApi(BaseApi):
 
     def ticker_url(self, pair: Pair) -> str:
         return f'https://www.binance.com/trade.html?symbol={pair.base}_{pair.quote}'
+
+    async def coin_name(self, symbol: str) -> str:
+        return ''

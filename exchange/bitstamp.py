@@ -6,6 +6,10 @@ class BitstampApiException(BaseExchangeException):
     pass
 
 
+class BitstampPairNamesException(BitstampApiException):
+    pass
+
+
 class BitstampApi(BaseApi):
     @property
     def name(self):
@@ -30,3 +34,12 @@ class BitstampApi(BaseApi):
 
     def ticker_url(self, pair: Pair) -> str:
         return 'https://www.bitstamp.net/market/tradeview/'
+
+    async def coin_name(self, symbol: str) -> str:
+        trading_pairs = await self.get('https://www.bitstamp.net/api/v2/trading-pairs-info/')
+        if not isinstance(trading_pairs, list):
+            raise BitstampPairNamesException('bitstamp api changed')
+        description = next((i['description'] for i in trading_pairs if i['name'].startswith(symbol)), None)
+        if not description:
+            raise BitstampPairNamesException(f'cannot find coin {symbol!r}')
+        return description.split('/')[0].strip()  # "Litecoin / U.S. dollar"

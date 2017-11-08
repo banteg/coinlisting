@@ -31,3 +31,6 @@ class KrakenApi(BaseApi):
 
     def ticker_url(self, pair: Pair) -> str:
         return 'https://www.kraken.com/charts'
+
+    async def coin_name(self, symbol: str) -> str:
+        return ''

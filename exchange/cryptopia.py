@@ -6,6 +6,10 @@ class CryptopiaApiException(BaseExchangeException):
     pass
 
 
+class CryptopiaPairNamesException(CryptopiaApiException):
+    pass
+
+
 class CryptopiaApi(BaseApi):
     @property
     def name(self):
@@ -31,3 +35,13 @@ class CryptopiaApi(BaseApi):
 
     def ticker_url(self, pair: Pair) -> str:
         return f'https://www.cryptopia.co.nz/Exchange/?market={pair.base}_{pair.quote}'
+
+    async def coin_name(self, symbol: str) -> str:
+        response = await self.get('https://www.cryptopia.co.nz/api/GetTradePairs')
+        if not response['Success']:
+            raise CryptopiaPairNamesException(response['Message'])
+        trading_pairs = response['Data']
+        coin_name = next((i['Currency'] for i in trading_pairs if i['Label'].startswith(symbol)), None)
+        if not coin_name:
+            raise CryptopiaPairNamesException(f'cannot find coin {symbol!r}')
+        return coin_name

@@ -6,6 +6,10 @@ class BittrexApiException(BaseExchangeException):
     pass
 
 
+class BittrexPairNamesException(BittrexApiException):
+    pass
+
+
 class BittrexApi(BaseApi):
     @property
     def name(self):
@@ -31,3 +35,13 @@ class BittrexApi(BaseApi):
 
     def ticker_url(self, pair: Pair) -> str:
         return f'https://bittrex.com/Market/Index?MarketName={pair.base}-{pair.quote}'
+
+    async def coin_name(self, symbol: str) -> str:
+        response = await self.get('https://bittrex.com/api/v1.1/public/getcurrencies')
+        if not response['success']:
+            raise BittrexPairNamesException(response['Message'])
+        currencies = response['result']
+        coin_name = next((i['CurrencyLong'] for i in currencies if i['Currency'] == symbol), None)
+        if not coin_name:
+            raise BittrexPairNamesException(f'cannot find coin {symbol!r}')
+        return coin_name

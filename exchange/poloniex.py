@@ -6,6 +6,10 @@ class PoloniexApiException(BaseExchangeException):
     pass
 
 
+class PoloniexPairNamesException(PoloniexApiException):
+    pass
+
+
 class PoloniexApi(BaseApi):
     @property
     def name(self):
@@ -30,3 +34,10 @@ class PoloniexApi(BaseApi):
 
     def ticker_url(self, pair: Pair) -> str:
         return f'https://poloniex.com/exchange#{pair.base}_{pair.quote}'
+
+    async def coin_name(self, symbol: str) -> str:
+        currencies = await self.get('https://poloniex.com/public?command=returnCurrencies')
+        coin_name = currencies.get(symbol, {}).get('name', None)
+        if not coin_name:
+            raise PoloniexPairNamesException(f'cannot find coin {symbol!r}')
+        return coin_name
