@@ -33,18 +33,18 @@ class CoinChecker:
         if not db_pairs:
             # initial launch, don't send message to channel, only put pairs to db
             await db.update_pairs(api.name, api_pairs)
-            getLogger().info(f'Initial launch, {len(api_pairs)} pairs added on exchange {api.name!r}.')
+            getLogger().info(f'[{api.name}] initial launch, {len(api_pairs)} pairs added')
             return
 
         new_pairs = api_pairs - db_pairs
 
         if not new_pairs:
-            getLogger().info(f'There is no new pairs on exchange {api.name!r}.')
+            getLogger().info(f'[{api.name}] no new pairs')
             return
 
-        getLogger().info(f'There is {len(new_pairs)} new pairs on exchange {api.name!r}')
+        getLogger().info(f'[{api.name}] {len(new_pairs)} new pairs')
         await db.update_pairs(api.name, new_pairs)
-        getLogger().info(f'{len(new_pairs)} pairs added to database on exchange {api.name!r}.')
+        getLogger().info(f'[{api.name}] {len(new_pairs)} pairs added to database')
         for pair in new_pairs:
             try:
                 coin_name = await api.coin_name(pair.base)
@@ -52,7 +52,7 @@ class CoinChecker:
                 getLogger().exception(e)
                 coin_name = ''
             await self.send_message(self.compose_message(api, pair, coin_name))
-            getLogger().info(f'Notification about pair {pair} on exchange {api.name!r} has been sent to channel.')
+            getLogger().info(f'[{api.name}] {pair} has been sent to channel')
 
     async def periodic(self, interval=None):
         while True:
