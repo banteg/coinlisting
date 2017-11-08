@@ -24,8 +24,8 @@ class BittrexApi(BaseApi):
         result = response['result']
         return set(
             Pair(
-                i['BaseCurrency'],
                 i['MarketCurrency'],
+                i['BaseCurrency'],
             ) for i in result
         )
 
@@ -34,7 +34,7 @@ class BittrexApi(BaseApi):
             raise BittrexApiException(response['message'])
 
     def ticker_url(self, pair: Pair) -> str:
-        return f'https://bittrex.com/Market/Index?MarketName={pair.base}-{pair.quote}'
+        return f'https://bittrex.com/Market/Index?MarketName={pair.quote}-{pair.base}'
 
     async def coin_name(self, symbol: str) -> str:
         response = await self.get('https://bittrex.com/api/v1.1/public/getcurrencies')
