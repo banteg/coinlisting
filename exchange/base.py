@@ -60,7 +60,9 @@ class BaseApi(ABC):
                     json_resp = await resp.json()
                     self._raise_if_error(json_resp)
                     return json_resp
-                except (aiohttp.client_exceptions.ClientResponseError, BaseExchangeException) as e:
+                except (aiohttp.client_exceptions.ClientResponseError,
+                        aiohttp.client_exceptions.ClientConnectorError,
+                        BaseExchangeException) as e:
                     getLogger().error(f'attempt {attempt}/{REQUEST_ATTEMPTS_LIMIT}, next in {delay} seconds...')
                     getLogger().exception(e)
                     attempt += 1
