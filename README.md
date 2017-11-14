@@ -35,6 +35,7 @@ $ source venv/bin/activate
 * [Cryptopia](https://www.cryptopia.co.nz/)
 * [Gate](https://gate.io/)
 * [Radar Relay](https://app.radarrelay.com/)
+* [Kucoin](https://www.kucoin.com/)
 
 ## Contributing
 

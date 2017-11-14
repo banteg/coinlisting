@@ -5,6 +5,7 @@ from exchange.bittrex import BittrexApi
 from exchange.cryptopia import CryptopiaApi
 from exchange.gate import GateApi
 from exchange.kraken import KrakenApi
+from exchange.kucoin import KucoinApi
 from exchange.liqui import LiquiApi
 from exchange.poloniex import PoloniexApi
 from exchange.radarrelay import RadarRelayApi
@@ -20,4 +21,5 @@ exchanges = [
     CryptopiaApi,
     GateApi,
     RadarRelayApi,
+    KucoinApi
 ]
