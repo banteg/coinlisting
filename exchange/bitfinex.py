@@ -6,6 +6,10 @@ class BitfinexApiException(BaseExchangeException):
     pass
 
 
+class BitfinexPairNamesException(BitfinexApiException):
+    pass
+
+
 class BitfinexApi(BaseApi):
     @property
     def name(self):
@@ -32,4 +36,10 @@ class BitfinexApi(BaseApi):
         return f'https://www.bitfinex.com/trading/{pair.base}{pair.quote}'
 
     async def coin_name(self, symbol: str) -> str:
-        return ''
+        response = await self.get('https://www.bitfinex.com/account/_bootstrap/', check_response=False)
+        if not response or 'nice_ccy_names' not in response:
+            raise BitfinexPairNamesException('bitfinex api changed')
+        currencies = response['nice_ccy_names']
+        if symbol not in currencies:
+            raise BitfinexPairNamesException(f'cannot find coin {symbol!r}')
+        return currencies.get(symbol, '')
