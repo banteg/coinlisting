@@ -1,4 +1,5 @@
 import asyncio
+from itertools import groupby
 from logging import getLogger
 
 from aiotg import Bot, logging
@@ -45,14 +46,16 @@ class CoinChecker:
         getLogger().info(f'[{api.name}] {len(new_pairs)} new pairs')
         await db.update_pairs(api.name, new_pairs)
         getLogger().info(f'[{api.name}] {len(new_pairs)} pairs added to database')
-        for pair in new_pairs:
+
+        for base, pairs in self.group_pairs(new_pairs):
             try:
-                coin_name = await api.coin_name(pair.base)
+                coin_name = await api.coin_name(base)
             except BaseExchangeException as e:
                 getLogger().exception(e)
                 coin_name = ''
-            await self.send_message(self.compose_message(api, pair, coin_name))
-            getLogger().info(f'[{api.name}] {pair} has been sent to channel')
+            msg = self.compose_message(api, pairs, coin_name)
+            await self.send_message(msg)
+            getLogger().info(f'[{api.name}] message {msg!r} send to the channel')
 
     async def periodic(self, interval=None):
         while True:
@@ -64,11 +67,19 @@ class CoinChecker:
         await self.channel.send_text(coin_info, parse_mode='Markdown', disable_web_page_preview=True)
 
     @staticmethod
-    def compose_message(api: BaseApi, pair: Pair, coin_name: str) -> str:
-        ticker_url = api.markdown_url(f'{pair.base}/{pair.quote}', api.ticker_url(pair))
+    def compose_message(api: BaseApi, pairs: [Pair], coin_name: str) -> str:
+        ticker_url = ', '.join(
+            api.markdown_url(f'{pair.base}/{pair.quote}', api.ticker_url(pair))
+            for pair in pairs
+        )
         if coin_name:
             ticker_url = f'{ticker_url} ({coin_name})'
         return f'{ticker_url} listed on {api.md_link}'
+
+    @staticmethod
+    def group_pairs(pairs):
+        for base, pairs in groupby(sorted(pairs), lambda x: x.base):
+            yield base, list(pairs)
 
 
 if __name__ == '__main__':
