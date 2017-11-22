@@ -1,14 +1,14 @@
 aiocfscrape==0.0.3
 aiodns==1.1.1
-aiohttp==2.2.5
-aiotg==0.9.4
+aiohttp==2.3.3
+aiotg==0.9.5
 argh==0.26.2
-async-timeout==1.4.0
-asyncpg==0.12.0
+async-timeout==2.0.0
+asyncpg==0.13.0
 cchardet==2.1.1
 chardet==3.0.4
 Js2Py==0.50
-multidict==3.2.0
+multidict==3.3.2
 pathtools==0.1.2
 pycares==2.3.0
 pyjsparser==2.5.2
@@ -17,4 +17,4 @@ PyYAML==3.12
 six==1.11.0
 tzlocal==1.4
 watchdog==0.8.3
-yarl==0.13.0
+yarl==0.14.2
