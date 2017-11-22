@@ -1,4 +1,4 @@
-git+https://github.com/ape364/aiocfscrape.git@aiohttp-fixes
+aiocfscrape==0.0.3
 aiodns==1.1.1
 aiohttp==2.2.5
 aiotg==0.9.4
