@@ -73,7 +73,7 @@ class CoinChecker:
             for pair in pairs
         )
         if coin_name:
-            ticker_url = f'{ticker_url} ({coin_name})'
+            return f'*{coin_name}* listed on {api.md_link}\n{ticker_url}'
         return f'{ticker_url} listed on {api.md_link}'
 
     @staticmethod
