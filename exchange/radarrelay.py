@@ -17,7 +17,7 @@ class RadarRelayApi(BaseApi):
 
     @property
     def md_link(self):
-        return self.markdown_url('Radar relay', 'https://app.radarrelay.com')
+        return self.markdown_url('Radar Relay', 'https://app.radarrelay.com')
 
     async def tradable_pairs(self) -> set:
         response = await self.get(
