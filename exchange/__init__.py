@@ -9,6 +9,7 @@ from exchange.kucoin import KucoinApi
 from exchange.liqui import LiquiApi
 from exchange.poloniex import PoloniexApi
 from exchange.radarrelay import RadarRelayApi
+from exchange.ethfinex import EthfinexApi
 
 exchanges = [
     KrakenApi,
@@ -21,5 +22,6 @@ exchanges = [
     CryptopiaApi,
     GateApi,
     RadarRelayApi,
-    KucoinApi
+    KucoinApi,
+    EthfinexApi,
 ]

@@ -36,6 +36,7 @@ $ source venv/bin/activate
 * [Gate](https://gate.io/)
 * [Radar Relay](https://app.radarrelay.com/)
 * [Kucoin](https://www.kucoin.com/)
+* [Ethfinex](https://www.ethfinex.com/)
 
 ## Contributing
 
